@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+	<h3>This is main page</h3>
+
+	<a href="{{ url_for('upload') }}">Upload Files</a><br>
+	<a href="{{ url_for('check') }}">Check Session ID</a>
+</div>
+{% endblock %}
+

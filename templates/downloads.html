@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+	<h3>Dosyalarınız hazır</h3>
+	<p>Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
+	<p>Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Upload a file</h1>
+<hr>
+<div class="shadow p-3 mb-5 bg-body rounded">
+  <form action="/upload-file" method="POST" enctype="multipart/form-data">
+
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Not listesi</label>
+      <input class="form-control" type="file" name="not_listesi" id="formFile">
+      <br>
+      <label for="formFile" class="form-label">Orgün Şablon</label>
+      <input class="form-control" type="file" name="orgun_sablon" id="formFile">
+      <br>
+      <label for="formFile" class="form-label">İO Şablon</label>
+      <input class="form-control" type="file" name="IO_sablon" id="formFile">
+    </div>
+
+  <button type="submit" class="btn btn-primary">Yükle</button>
+
+</form>
+
+</div>
+
+
+{% endblock %}
