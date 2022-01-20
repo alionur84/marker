@@ -53,13 +53,14 @@ def id_correct(df, template):
                 found.append(i)
             
     erasmuslike = unknown_ids[~unknown_ids.index.isin(found)]
+    corrected_ids = unknown_ids[unknown_ids.index.isin(found)]
 
     for i in erasmuslike.index:
         df.drop(i, inplace=True)
             
     df.sort_values(by='TCKimlikNo', inplace=True)
     df.reset_index(inplace=True, drop=True)
-    return df, erasmuslike
+    return df, erasmuslike, corrected_ids
 
 def finalizer(df, template):
     attended = template[template['OgrenciNo_StudentNo'].isin(df['TCKimlikNo'])]

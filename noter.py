@@ -18,6 +18,7 @@ app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOADS']
 MAX_CONTENT_LENGTH = 1500000
 
 
+
 class UploadForm(FlaskForm):
     marks = FileField("Optik Okuyucu Dosyası")
     sablon_o =FileField("Örgün Şablon")
@@ -51,8 +52,12 @@ def check_size(file):
 @app.route("/")
 @app.route("/home")
 def home():
+    session.pop('user_id', default=None)
+    session.pop('unknown_students', default=None)
     user_id = str(uuid.uuid4())
     session['user_id'] = user_id
+    session['unknown_students'] = {}
+    session['corrected_ids'] = {}
     return render_template("index.html", title='Home')
 
 
@@ -101,6 +106,18 @@ def upload():
                     id_corrected = id_correct(df, template)
                     df = id_corrected[0]
                     unknown_students = id_corrected[1]
+                    corrected_ids = id_corrected[2]
+                    
+                    for i in unknown_students.index:
+                        session['unknown_students'][str(unknown_students.loc[i, ['TCKimlikNo']][0])] = [str(unknown_students.loc[i, ['Adı ']][0]), str(unknown_students.loc[i, ['Soyadı']][0]), int(unknown_students.loc[i, [unknown_students.columns[-1]]][0])]
+
+                    for z in corrected_ids.index:
+                        session['corrected_ids'][str(corrected_ids.loc[z, ['TCKimlikNo']][0])] = [str(corrected_ids.loc[z, ['Adı ']][0]), str(corrected_ids.loc[z, ['Soyadı']][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-1]]][0])]
+
+                    
+
+
+
 
                     final_file = finalizer(df, template)
                     final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ))
@@ -128,7 +145,20 @@ def upload():
 def download_page(filename1, filename2):
     filename1 = filename1
     filename2 = filename2
-    return render_template("downloads.html", filename1=filename1, filename2=filename2)
+
+    unknown_students = session['unknown_students']
+    corrected_ids = session['corrected_ids']
+    if len(unknown_students)>0:
+        unknowns = True
+    else:
+        unknowns = False
+
+    if len(corrected_ids)>0:
+        corrected = True
+    else:
+        corrected = False
+
+    return render_template("downloads.html", filename1=filename1, filename2=filename2, unknown_students=unknown_students, unknowns=unknowns, corrected_ids=corrected_ids, corrected=corrected)
 
 @app.route('/downloads/<path:filename>', methods=['GET', 'POST'])
 def downloads(filename):

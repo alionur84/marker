@@ -6,5 +6,59 @@
 	<h3>Dosyalarınız hazır</h3>
 	<p>Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
 	<p>Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
+	<p class="lead">Lütfen dosyaları, varsa aşağıdaki tabloları, giren ve girmeyen öğrenci sayılarını <strong>kontrol etmeyi unutmayınız!</strong></p>
+	<br>
+	{% if unknowns %}
+	<h3>Sınava giren aşağıdaki öğrenciler yüklenen şablonda bulunamamıştır!!</h3>
+		<table class="table caption-top">
+		  <caption>Şablonda bulunamayan Öğrenciler</caption>
+		  <thead>
+		    <tr>
+		      <th scope="col">Formdaki Öğrenci No</th>
+		      <th scope="col">İsim</th>
+		      <th scope="col">Soyisim</th>
+		      <th scope="col">Not</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		     {% for key in unknown_students.keys() %}
+		    <tr>
+		      <th scope="row">{{ key }}</th>
+		      <td>{{ unknown_students[key][0] }}</td>
+		      <td>{{ unknown_students[key][1] }}</td>
+		      <td>{{ unknown_students[key][2] }}</td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+	{% endif %}
+	<br>
+
+		{% if corrected %}
+	<h3>Sınava giren aşağıdaki öğrenciler numaralarını yanlış yazmış, numaralar şablondan bulunarak düzeltilmiştir</h3>
+		<table class="table caption-top">
+		  <caption>Numarası düzeltilen öğrenciler</caption>
+		  <thead>
+		    <tr>
+		      <th scope="col">Formdaki Öğrenci No</th>
+		      <th scope="col">İsim</th>
+		      <th scope="col">Soyisim</th>
+		      <th scope="col">Not</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		     {% for student in corrected_ids.keys() %}
+		    <tr>
+		      <th scope="row">{{ student }}</th>
+		      <td>{{ corrected_ids[student][0] }}</td>
+		      <td>{{ corrected_ids[student][1] }}</td>
+		      <td>{{ corrected_ids[student][2] }}</td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+	{% endif %}
+	<br>
+
 </div>
 {% endblock %}
