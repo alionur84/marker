@@ -43,6 +43,7 @@ def template_concat(path1, path2):
 def id_correct(df, template):
     unknown_ids = df[~df['TCKimlikNo'].isin(template['OgrenciNo_StudentNo'])]
     found = []
+    corrected_ids_list = []
     for i in unknown_ids.index:
         name = unknown_ids.loc[i, ['Adı '][0]]
         surname = unknown_ids.loc[i, ['Soyadı'][0]]
@@ -51,9 +52,11 @@ def id_correct(df, template):
                 #print(template.loc[z, ['OgrenciNo_StudentNo']])
                 df.loc[i, ['TCKimlikNo']] = template.loc[z, ['OgrenciNo_StudentNo'][0]]
                 found.append(i)
+                corrected_ids_list.append(template.loc[z, ['OgrenciNo_StudentNo'][0]])
             
     erasmuslike = unknown_ids[~unknown_ids.index.isin(found)]
     corrected_ids = unknown_ids[unknown_ids.index.isin(found)]
+    corrected_ids['corrected_student_id'] = corrected_ids_list
 
     for i in erasmuslike.index:
         df.drop(i, inplace=True)

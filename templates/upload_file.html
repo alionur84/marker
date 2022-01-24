@@ -2,27 +2,26 @@
 
 {% block content %}
 
+  <h1>Dosyaları Yükleyiniz</h1>
+  <hr>
+  <div class="shadow p-3 mb-5 bg-body rounded">
+    <form action="/upload-file" method="POST" enctype="multipart/form-data">
 
-<h1>Upload a file</h1>
-<hr>
-<div class="shadow p-3 mb-5 bg-body rounded">
-  <form action="/upload-file" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="formFile" class="form-label fw-bolder">Not listesi (optik okuyucu dosyası)</label>
+        <input class="form-control" type="file" name="not_listesi" id="formFile">
+        <br>
+        <label for="formFile" class="form-label fw-bolder">Orgün Şablon</label>
+        <input class="form-control" type="file" name="orgun_sablon" id="formFile">
+        <br>
+        <label for="formFile" class="form-label fw-bolder">İO Şablon</label>
+        <input class="form-control" type="file" name="IO_sablon" id="formFile">
+      </div>
 
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Not listesi</label>
-      <input class="form-control" type="file" name="not_listesi" id="formFile">
-      <br>
-      <label for="formFile" class="form-label">Orgün Şablon</label>
-      <input class="form-control" type="file" name="orgun_sablon" id="formFile">
-      <br>
-      <label for="formFile" class="form-label">İO Şablon</label>
-      <input class="form-control" type="file" name="IO_sablon" id="formFile">
-    </div>
+    <button type="submit" class="btn btn-primary">Yükle</button>
+    <a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
 
-  <button type="submit" class="btn btn-primary">Yükle</button>
-
-</form>
-
+  </form>
 </div>
 
 
