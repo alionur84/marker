@@ -72,7 +72,7 @@ def upload():
             not_listesi = request.files["not_listesi"]
             orgun_sablon = request.files["orgun_sablon"]
             IO_sablon = request.files["IO_sablon"]
-
+            print(not_listesi)
             if not_listesi.filename == "" or orgun_sablon.filename == "" or IO_sablon.filename == "":
                 flash('Eksik dosya yüklenmiş ya da dosya adları desteklenmiyor. Lütfen dosyaları ve dosya adlarını kontrol ediniz!!', 'danger')
                 session.pop('user_id', default=None)
