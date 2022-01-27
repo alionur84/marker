@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import uuid
 import io
 from xls_creator import *
+import sys
 
 
 
@@ -49,10 +50,18 @@ def home():
     session.pop('user_id', default=None)
     session.pop('unknown_students', default=None)
     session.pop('corrected_ids', default=None)
+    session.pop('attended_count', default=None)
+    session.pop('mean_mark', default=None)
+    session.pop('enrolled_count', default=None)
+    session.pop('std_dev', default=None)
     user_id = str(uuid.uuid4())
     session['user_id'] = user_id
     session['unknown_students'] = {}
     session['corrected_ids'] = {}
+    session['attended_count'] = str(0)
+    session['mean_mark'] = str(0)
+    session['enrolled_count'] = str(0)
+    session['std_dev'] = str(0)
 
     return render_template("index.html", title='Home')
 
@@ -72,7 +81,7 @@ def upload():
             not_listesi = request.files["not_listesi"]
             orgun_sablon = request.files["orgun_sablon"]
             IO_sablon = request.files["IO_sablon"]
-            print(not_listesi)
+            
             if not_listesi.filename == "" or orgun_sablon.filename == "" or IO_sablon.filename == "":
                 flash('Eksik dosya yüklenmiş ya da dosya adları desteklenmiyor. Lütfen dosyaları ve dosya adlarını kontrol ediniz!!', 'danger')
                 session.pop('user_id', default=None)
@@ -96,14 +105,22 @@ def upload():
                     try:
                         df = file_uploader(not_listesi_path)
                         df = header_dropper(df)
-                        df = clean_na(df)
-                        df = convert_datatypes(df)
-                        template = template_concat(orgun_sablon_path, IO_sablon_path)
-                        id_corrected = id_correct(df, template)
+                        
+                        result = clean_na(df)
+                        session['attended_count'] = str(result['attended_count'])
+                        session['mean_mark'] = str(result['mean_mark'])
+                        session['std_dev'] = str(result['std_dev'])
+
+                        df = convert_datatypes(result['df'])
+
+                        template_result = template_concat(orgun_sablon_path, IO_sablon_path)
+                        session['enrolled_count'] = str(template_result['enrolled_count'])
+                        
+                        id_corrected = id_correct(df, template_result['template_df'])
                         df = id_corrected[0]
                         unknown_students = id_corrected[1]
                         corrected_ids = id_corrected[2]
-                        
+                                                
                         
                         for i in unknown_students.index:
                             session['unknown_students'][str(unknown_students.loc[i, ['TCKimlikNo']][0])] = [str(unknown_students.loc[i, ['Adı ']][0]), str(unknown_students.loc[i, ['Soyadı']][0]), int(unknown_students.loc[i, [unknown_students.columns[-1]]][0])]
@@ -111,19 +128,19 @@ def upload():
                         for z in corrected_ids.index:
                             session['corrected_ids'][str(corrected_ids.loc[z, ['TCKimlikNo']][0])] = [str(corrected_ids.loc[z, ['Adı ']][0]), str(corrected_ids.loc[z, ['Soyadı']][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-2]]][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-1]]][0]) ]
 
-
-                        
-                        final_file = finalizer(df, template)
+                                                
+                        final_file = finalizer(df, template_result['template_df'])
                         final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ))
                         final_file[1].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "io.xlsx" ))
                         
-
+                        
                         filename_orgun = session['user_id'] + "_" + "orgun.xlsx"
                         filename_io = session['user_id'] + "_" + "io.xlsx"
                         
                         os.remove(not_listesi_path)
                         os.remove(orgun_sablon_path)
                         os.remove(IO_sablon_path)
+                        
                         flash('Dosyalar başarıyla yüklendi', 'success')
                         return redirect(url_for('download_page', filename1=filename_orgun, filename2=filename_io))
                     except:
@@ -151,6 +168,11 @@ def download_page(filename1, filename2):
         try:
             unknown_students = session['unknown_students']
             corrected_ids = session['corrected_ids']
+            attended_count = session['attended_count']
+            mean_mark = session['mean_mark']
+            std_dev = session['std_dev']
+            enrolled_count = session['enrolled_count']
+            
 
             if len(unknown_students)>0:
                 unknowns = True
@@ -165,7 +187,9 @@ def download_page(filename1, filename2):
 
             return render_template("downloads.html", filename1=filename1, filename2=filename2, 
                 unknown_students=unknown_students, unknowns=unknowns, corrected_ids=corrected_ids,
-                corrected=corrected, title='Download your files')
+                corrected=corrected, attended_count=attended_count,
+                mean_mark=mean_mark, std_dev=std_dev,
+                enrolled_count=enrolled_count, title='Download your files')
         except:
             flash('Bir sorun oluştu, lütfen tekrar deneyiniz!!', 'danger')
             abort(404)

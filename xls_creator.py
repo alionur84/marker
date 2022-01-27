@@ -25,7 +25,12 @@ def clean_na(df):
     df.dropna(inplace=True, how='all')
     df.dropna(axis=1, how='all', inplace=True)
     df.reset_index(inplace = True, drop = True)
-    return df
+    attended_count = len(df.index)
+    mean_mark = round(df['Puan'].mean(), 2)
+    std_dev = round(df['Puan'].std(), 2)
+    result = {'df': df, 'attended_count': attended_count,
+    'mean_mark': mean_mark, 'std_dev': std_dev}
+    return result
 
 def convert_datatypes(df):
     df = df.convert_dtypes()
@@ -34,11 +39,13 @@ def convert_datatypes(df):
 
 # check if they are excel or csv files
 def template_concat(path1, path2):
-	sablon_o = pd.read_excel(path1)
-	sablon_io = pd.read_excel(path2)
-	template = pd.concat([sablon_o, sablon_io])
-	template.reset_index(inplace=True, drop=True)
-	return template
+    sablon_o = pd.read_excel(path1)
+    sablon_io = pd.read_excel(path2)
+    template = pd.concat([sablon_o, sablon_io])
+    template.reset_index(inplace=True, drop=True)
+    enrolled_count = len(template.index)
+    result = {'template_df': template, 'enrolled_count': enrolled_count}
+    return result
 
 def id_correct(df, template):
     unknown_ids = df[~df['TCKimlikNo'].isin(template['OgrenciNo_StudentNo'])]

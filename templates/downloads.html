@@ -2,19 +2,49 @@
 
 {% block content %}
 
-<div>
-	<h3>Dosyalarınız hazır</h3>
+<div class="container">
+
+	<h2>Dosyalarınız hazır</h2>
 	<hr>
-	<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
-	<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
-	<p class="lead">Lütfen dosyaları, varsa aşağıdaki tabloları, giren ve girmeyen öğrenci sayılarını <strong>kontrol etmeyi unutmayınız!</strong></p>
-	<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
-	<br>
-	<hr>
-</div>
+	<div class="clearfix">
+		<div>
+			<ol class="list-group list-group col-md-3 float-md-start mb-3 ms-md-3" style="padding-right: 20px;">
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Sınava Giren Öğrenci Sayısı</div>
+							{{ attended_count }}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Derse Kayıtlı Öğrenci Sayısı</div>
+							{{ enrolled_count }}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Ortalama Not</div>
+							{{ mean_mark }}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Standart Sapma</div>
+							{{ std_dev }}
+					</div>
+				</li>
+			</ol>
+		</div>
+					
+		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
+		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
+		<p class="fs-5 text-wrap">Lütfen dosyaları, varsa aşağıdaki tabloları, giren ve girmeyen öğrenci sayılarını <strong>kontrol etmeyi unutmayınız!</strong></p>
+		<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
+	</div>
+
 <div>
 	{% if unknowns %}
-	<h3>Sınava giren aşağıdaki öğrenciler yüklenen şablonda bulunamamıştır!!</h3>
+	<h4>Sınava giren aşağıdaki öğrenciler yüklenen şablonda bulunamamıştır!!</h4>
 		<table class="table caption-top">
 		  <caption>Şablonda bulunamayan Öğrenciler</caption>
 		  <thead>
@@ -40,7 +70,7 @@
 	<br>
 
 		{% if corrected %}
-	<h3>Sınava giren aşağıdaki öğrenciler numaralarını yanlış yazmış, numaralar şablondan bulunarak düzeltilmiştir</h3>
+	<h4>Sınava giren aşağıdaki öğrenciler numaralarını yanlış yazmış, numaralar şablondan bulunarak düzeltilmiştir</h4>
 		<table class="table caption-top">
 		  <caption>Numarası düzeltilen öğrenciler</caption>
 		  <thead>
@@ -65,6 +95,7 @@
 		  </tbody>
 		</table>
 	{% endif %}
+</div>
 </div>
 
 {% endblock %}

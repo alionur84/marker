@@ -3,25 +3,31 @@
 {% block content %}
 	<h1>Marker - Anasayfa</h1>
 	<hr>
-	<div class="row">
-    	<div class="col-8">
-			<p class="fs-5 text-wrap">Bu uygulama Ege Üniversitesi İİBF optik okuyucusunun sağladığı excel dosyasını OBYS şablonuna göre düzenlemek için geliştirilmiştir.</p>
-			<p class="fs-5 text-wrap">Uygulama sınava girmeyen öğrencilerin notunu -1 olarak işler, derse kayıtlı olmayan öğrencileri (erasmus vb.) listeler, numarasını yanlış yazmış öğrencilerin numaralarını düzeltir. Ancak öğrenci hem ismini hem numarasını yanlış yazmışsa <strong>düzeltme yapılamamaktadır. </strong>Eğer bonus puan uygulaması yaptıysanız, yani öğrenciler toplamda 100'den falza puan alabiliyorlarsa, bu öğrencilerin notu 100 olarak girilmektedir.</p>
-			<p class="fs-5 text-wrap">Yüklediğiniz dosyaların <strong>değiştirilmemiş</strong> olması önemlidir. Editlenmiş yahut değiştirilmiş dosyalar <strong>işlenememektedir</strong>.</p>
-			<p class="fs-5 text-wrap">Bu nedenle not listesini optik okuyucunun ürettiği şekilde, şablonları ise OBYS'den indirdiğiniz haliyle yükleyiniz.</p>
-			<p class="fs-5 text-wrap">Son ekranda örgün ve ikinci öğretim için düzenlenmiş OBYS dosyalarını indirebilir, numarasını yanlış kodlamış ve şablonlarda bulunamayan (erasmus vb.) öğrencilerin listesini görüntüleyebilirsiniz. <strong>Lütfen indirdiğiniz dosyaları kontrol etmeyi unutmayınız!!</strong></p>
+	<div class="clearfix">
+		<img src="../static/images/homework-g304d45681_1920.png" class="col-md-3 float-md-start mb-3 ms-md-3" style="padding-right: 20px;" alt="exam">
+    	<!--<div class="col-lg-8">-->
+    	<div style="padding-left: 20px;">
+		<p class="fs-5 text-wrap" style="text-align: justify;
+	  		text-justify: inter-word;">Bu uygulama Ege Üniversitesi İİBF optik okuyucusunun sağladığı excel dosyasını OBYS şablonuna göre düzenlemek için geliştirilmiştir.</p>
+	  	<p class="fs-5 text-wrap" style="text-align: justify;
+	  		text-justify: inter-word;">Uygulama sınava girmeyen öğrencilerin notunu -1 olarak işler, derse kayıtlı olmayan öğrencileri (erasmus vb.) listeler, numarasını yanlış yazmış öğrencilerin numaralarını düzeltir. Ancak öğrenci hem ismini hem numarasını yanlış yazmışsa <strong>düzeltme yapılamamaktadır</strong>. </p>
+	  	<p class="fs-5 text-wrap" style="text-align: justify;
+	  		text-justify: inter-word;">Eğer bonus puan uygulaması yaptıysanız, yani öğrenciler toplamda 100'den falza puan alabiliyorlarsa, bu öğrencilerin notu 100 olarak girilmektedir.</p>
+	  	<p class="fs-5 text-wrap" style="text-align: justify;
+	  		text-justify: inter-word;">Yüklediğiniz dosyaların <strong>değiştirilmemiş</strong> olması önemlidir. Editlenmiş yahut değiştirilmiş dosyalar <strong>işlenememektedir</strong>. Bu nedenle not listesini optik okuyucunun ürettiği şekilde, şablonları ise OBYS'den indirdiğiniz haliyle yükleyiniz.</p>
+	  	<p class="fs-5 text-wrap" style="text-align: justify;
+	  		text-justify: inter-word;">Son ekranda örgün ve ikinci öğretim için düzenlenmiş OBYS dosyalarını indirebilir, numarasını yanlış kodlamış ve şablonlarda bulunamayan (erasmus vb.) öğrencilerin listesini görüntüleyebilirsiniz. <strong>Lütfen indirdiğiniz dosyaları kontrol etmeyi unutmayınız!!</strong></p>
 		</div>
-		<div class="col">
-			<img src="../static/images/optik1.jpeg" class="img-responsive" alt="optikform"/>
-			<img src="../static/images/optik2.jpeg" style= "margin-top:20px;" width="297" height="169" class="img-responsive" alt="optikform"/>
-			<br>
-			<br>
-			<a href="{{ url_for('upload') }}"><button type="button" class="btn btn-primary btn-lg">Dosya Yükleme</button></a>
-			<!--<br>
-			<br>
-			<a href="{{ url_for('check') }}"><button type="button" class="btn btn-secondary btn-lg">Check Session ID</button></a>-->
-		</div>
+
+		<!--</div>-->
+		<!--<div class="col-sm-4">-->
+			<!--<img src="../static/images/optik1.jpeg" class="img-fluid img-responsive rounded mx-auto d-block" alt="optikform"/>-->
+			<!--<img src="../static/images/exam-gc1f0f5ce3_1920.png" style= "margin-top:20px;" width="297" height="169" class="img-fluid img-responsive rounded mx-auto d-block" alt="exam"/>-->
+			<center><a href="{{ url_for('upload') }}"><button type="button" class="btn btn-primary btn-lg">Dosya Yükleme</button></a></center>
+
+			<!--<a href="{{ url_for('check') }}"><button type="button" class="btn btn-secondary btn-lg">Check Session ID</button></a>-->
 	</div>
+	<!--</div>-->
 
 
 {% endblock %}
