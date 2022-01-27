@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 import uuid
 import io
 from xls_creator import *
-import sys
 
 
 
