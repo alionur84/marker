@@ -143,8 +143,8 @@ def upload():
                         
                                                 
                         final_file = finalizer(df, template_result['template_df'])
-                        final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ))
-                        final_file[1].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "io.xlsx" ))
+                        final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ), index=False)
+                        final_file[1].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "io.xlsx" ), index=False)
                         
                                                 
                         filename_orgun = session['user_id'] + "_" + "orgun.xlsx"
