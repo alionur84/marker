@@ -108,30 +108,30 @@ def upload():
                     # if no header and null rows than move to next try except
 
                     try:
-                        
+                        print("1\n")
                         df = file_uploader(not_listesi_path)
-                        
+                        print("2\n")
                         df = header_dropper(df)
                                             
-                        
+                        print("3\n")
                         result = clean_na(df)
                         session['attended_count'] = str(result['attended_count'])
                         session['mean_mark'] = str(result['mean_mark'])
                         session['std_dev'] = str(result['std_dev'])
-                        
+                        print("4\n")
                         
                         df = convert_datatypes(result['df'])
                         
-
+                        print("5\n")
                         template_result = template_concat(orgun_sablon_path, IO_sablon_path)
                         session['enrolled_count'] = str(template_result['enrolled_count'])
-                        
+                        print("6\n")
                         
                         id_corrected = id_correct(df, template_result['template_df'])
                         df = id_corrected[0]
                         unknown_students = id_corrected[1]
                         corrected_ids = id_corrected[2]
-                        
+                        print("7\n")
                                          
                         
                         for i in unknown_students.index:
@@ -140,13 +140,13 @@ def upload():
                         for z in corrected_ids.index:
                             session['corrected_ids'][str(corrected_ids.loc[z, ['TCKimlikNo']][0])] = [str(corrected_ids.loc[z, ['Adı ']][0]), str(corrected_ids.loc[z, ['Soyadı']][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-2]]][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-1]]][0]) ]
 
-                        
+                        print("8\n")
                                                 
                         final_file = finalizer(df, template_result['template_df'])
                         final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ), index=False)
                         final_file[1].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "io.xlsx" ), index=False)
                         
-                                                
+                        print("9\n")                        
                         filename_orgun = session['user_id'] + "_" + "orgun.xlsx"
                         filename_io = session['user_id'] + "_" + "io.xlsx"
                         
@@ -154,7 +154,7 @@ def upload():
                         os.remove(orgun_sablon_path)
                         os.remove(IO_sablon_path)
 
-                                                
+                        print("10\n")                        
                         flash('Dosyalar başarıyla yüklendi', 'success')
                         return redirect(url_for('download_page', filename1=filename_orgun, filename2=filename_io))
 
@@ -162,41 +162,41 @@ def upload():
 
                         try:
                             df1 = file_uploader(not_listesi_path)
-                            
+                            print("11\n")
                             result = stats(df1)
                             session['attended_count'] = str(result['attended_count'])
                             session['mean_mark'] = str(result['mean_mark'])
                             session['std_dev'] = str(result['std_dev'])
-                            
+                            print("12\n")
                             df1 = convert_datatypes(df1)
-                            
+                            print("13\n")
                             template_result = template_concat(orgun_sablon_path, IO_sablon_path)
                             session['enrolled_count'] = str(template_result['enrolled_count'])
-                            
+                            print("14\n")
                             id_corrected = id_correct(df1, template_result['template_df'])
                             df1 = id_corrected[0]
                             unknown_students = id_corrected[1]
                             corrected_ids = id_corrected[2]
-                                                        
+                            print("15\n")                            
                             for i in unknown_students.index:
                                 session['unknown_students'][str(unknown_students.loc[i, ['TCKimlikNo']][0])] = [str(unknown_students.loc[i, ['Adı ']][0]), str(unknown_students.loc[i, ['Soyadı']][0]), int(unknown_students.loc[i, [unknown_students.columns[-1]]][0])]
 
                             for z in corrected_ids.index:
                                 session['corrected_ids'][str(corrected_ids.loc[z, ['TCKimlikNo']][0])] = [str(corrected_ids.loc[z, ['Adı ']][0]), str(corrected_ids.loc[z, ['Soyadı']][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-2]]][0]), int(corrected_ids.loc[z, [corrected_ids.columns[-1]]][0]) ]
 
-                                                
+                            print("16\n")                    
                             final_file = finalizer(df1, template_result['template_df'])
                             final_file[0].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "orgun.xlsx" ), index=False)
                             final_file[1].to_excel(os.path.join(app.config['DOWNLOAD_FOLDER'], session['user_id'] + "_" + "io.xlsx" ), index=False)
                             
-                        
+                            print("17\n")
                             filename_orgun = session['user_id'] + "_" + "orgun.xlsx"
                             filename_io = session['user_id'] + "_" + "io.xlsx"
                             
                             os.remove(not_listesi_path)
                             os.remove(orgun_sablon_path)
                             os.remove(IO_sablon_path)
-                            
+                            print("18\n")
                             flash('Dosyalar başarıyla yüklendi', 'success')
                             return redirect(url_for('download_page', filename1=filename_orgun, filename2=filename_io))
 

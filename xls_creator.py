@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import re
 
 
 def file_uploader(filepath):
@@ -40,9 +41,19 @@ def stats(df):
     'mean_mark': mean_mark, 'std_dev': std_dev}
     return result
 
+# not all student ids were numeric if student leaves some characters blank
+# so corrected it to all numeric with regex
+
 def convert_datatypes(df):
+    non_numeric = df.loc[~df['TCKimlikNo'].str.isnumeric()]
+    for i in non_numeric.index:
+        numeric = re.sub("[^0-9]", "", non_numeric.loc[i, ['TCKimlikNo']][0])
+        df.loc[i, ['TCKimlikNo']] = numeric
     df = df.convert_dtypes()
     df['TCKimlikNo'] = df['TCKimlikNo'].astype('Int64')
+    df['Adı '] = df['Adı '].astype('str')
+    df['Soyadı'] = df['Soyadı'].astype('str')
+    df['Puan'] = df['Puan'].astype('Int64')
     return df
 
 # check if they are excel or csv files
@@ -54,6 +65,9 @@ def template_concat(path1, path2):
     enrolled_count = len(template.index)
     result = {'template_df': template, 'enrolled_count': enrolled_count}
     return result
+# some students code their ids wrong this causes duplicate student ids
+# first hande them and find the right ones from template
+# then create unknown ids dataframe
 
 def id_correct(df, template):
     duplicates = []
