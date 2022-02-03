@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<div class="container">
-
+<div class="container" style="background-image: url(../static/images/exam6.png); background-repeat: no-repeat; background-attachment: fixed; background-size: contain;">
 	<h2>Dosyalarınız hazır</h2>
 	<hr>
+
 	<div class="clearfix">
 		<div>
-			<ol class="list-group list-group col-md-3 float-md-start mb-3 ms-md-3" style="padding-right: 20px;">
+			<ol class="list-group list-group col-md-3 float-md-end mb-3 ms-md-3" style="padding-right: 20px;">
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 						<div class="fw-bold">Sınava Giren Öğrenci Sayısı</div>
@@ -39,7 +39,7 @@
 		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
 		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
 		<p class="fs-5 text-wrap">Lütfen dosyaları, varsa aşağıdaki tabloları, giren ve girmeyen öğrenci sayılarını <strong>kontrol etmeyi unutmayınız!</strong></p>
-		<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
+		<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success" style="float: right;">Anasayfaya Dön</button></a>
 	</div>
 
 <div>
