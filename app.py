@@ -18,6 +18,7 @@ app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOADS']
 MAX_CONTENT_LENGTH = 1500000
 
 
+# allowed extensions func
 
 def allowed_ext(filename):
 
@@ -30,6 +31,8 @@ def allowed_ext(filename):
         return True
     else:
         return False
+
+# allowed file size func
 
 def check_size(file):
     pos = file.tell()
