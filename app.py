@@ -18,15 +18,14 @@ app.config["ALLOWED_EXTENSIONS"] = ["XLSX", "XLS", "CSV"]
 app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOADS']
 MAX_CONTENT_LENGTH = 1500000
 
-<<<<<<< HEAD
+
 class FileForm(FlaskForm):
     io_var = BooleanField("İkinci Öğretim")
     but = BooleanField("Bütünleme")
     submit = SubmitField("Yükle")
-=======
 
 # allowed extensions func
->>>>>>> 03718d1c227bdc0dc61b9d5343ed5a12dfa34cd8
+
 
 def allowed_ext(filename):
 
