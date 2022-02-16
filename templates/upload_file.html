@@ -1,38 +1,54 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Dosyaları Yükleyiniz</h1>
+<hr>
+<div class="container" id="container">
 
-  <h1>Dosyaları Yükleyiniz</h1>
-  <hr>
-  <div class="container">
-    <div class="row align-items-start">
-      <div class="col-lg-7" style="width:50%; height: 100%">
-        <div class="shadow p-3 mb-5 bg-body rounded">
-          <form action="/upload-file" method="POST" enctype="multipart/form-data">
-
-            <div class="mb-3">
-              <label for="formFile" class="form-label fw-bolder">Not Listesi (optik okuyucu dosyası)</label>
-              <input class="form-control" type="file" name="not_listesi" id="formFile">
-              <br>
-              <label for="formFile" class="form-label fw-bolder">Örgün Şablon</label>
-              <input class="form-control" type="file" name="orgun_sablon" id="formFile">
-              <br>
-              <label for="formFile" class="form-label fw-bolder">İkinci Öğretim Şablon</label>
-              <input class="form-control" type="file" name="IO_sablon" id="formFile">
-            </div>
-
-          <button type="submit" class="btn btn-primary">Yükle</button>
-          <a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
-
-          </form>
-        </div>
-      </div>
-      <div class="col-lg-5" style="width:50%; height: 100%;">
+	<div class="row align-items-start">
+      	<div class="col-lg-7" style="width:50%; height:100%;" id="shadowedform">
+	        <div class="shadow p-3 mb-5 bg-body rounded">
+	        	<form action="/upload-file" method="POST" enctype="multipart/form-data" id="form">
+	        	<div class="row">
+		            <div class="mb-3">
+		            	  <label for="optik" class="form-label fw-bolder">Not Listesi (optik okuyucu dosyası)</label>
+			              <input class="form-control" type="file" name="not_listesi" id="optik">
+			              <br>
+			              <label for="orgun" class="form-label fw-bolder">Örgün Şablon</label>
+			              <input class="form-control" type="file" name="orgun_sablon" id="orgun">
+			              <br>
+			              <div id ="removableform">
+			                <label for="ikinciogretim_form" class="form-label fw-bolder" id="ikinciogretim_form_label">İkinci Öğretim Şablon</label>
+			                <input class="form-control" type="file" name="IO_sablon" id="ikinciogretim_form">
+			              </div>
+			        </div>
+		        </div>
+				<div class="row">
+					<div class="col">
+						{{ form.hidden_tag() }}
+						<div class="form-check form-switch" id="ioformdiv" onclick="handleClick()">
+							{{ form.io_var.label(class="form-check-label", for="ioswitch", id="io_switch_label") }}
+							{{ form.io_var(class="form-check-input", type="checkbox", role="switch", id="ioswitch", checked="true") }}
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-check form-switch">
+							{{ form.but.label(class="form-check-label", for="butunleme_switch", id="butunleme_switch_label") }}
+							{{ form.but(class="form-check-input", type="checkbox", role="switch", id="butunleme_switch") }}
+						</div>
+					</div>
+				</div>
+					<br>
+					<span>
+					{{ form.submit(type="submit", class="btn btn-primary") }}
+					<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success">Anasayfaya Dön</button></a>
+					</span>
+				</form>
+			</div>
+		</div>
+		<div class="col-lg-5" style="width:50%; height:100%;" id="image">
         <img src="../static/images/assessment1.png" class="img-fluid img-responsive rounded mx-auto d-block" alt="assign"/>
-      </div>
-    </div>
-  </div>
-
-
-
+      	</div>
+	</div>
+</div>
 {% endblock %}

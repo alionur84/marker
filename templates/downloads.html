@@ -37,7 +37,9 @@
 		</div>
 					
 		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>örgün</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename = filename1) }}">buraya tıklayınız</a></p>
-		<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
+		{% if io_var %}
+			<p class="fs-5 text-wrap">Obys için düzenlenmiş <strong>ikinci öğretim</strong> not listesini indirmek için <a href="{{ url_for('downloads', filename=filename2) }}">buraya tıklayınız</a></p>
+		{% endif %}
 		<p class="fs-5 text-wrap">Lütfen dosyaları, varsa aşağıdaki tabloları, giren ve girmeyen öğrenci sayılarını <strong>kontrol etmeyi unutmayınız!</strong></p>
 		<a href="{{ url_for('home') }}"><button type="button" class="btn btn-success" style="float: right;">Anasayfaya Dön</button></a>
 	</div>

@@ -57,14 +57,21 @@ def convert_datatypes(df):
     return df
 
 # check if they are excel or csv files
-def template_concat(path1, path2):
-    sablon_o = pd.read_excel(path1)
-    sablon_io = pd.read_excel(path2)
-    template = pd.concat([sablon_o, sablon_io])
-    template.reset_index(inplace=True, drop=True)
-    enrolled_count = len(template.index)
-    result = {'template_df': template, 'enrolled_count': enrolled_count}
-    return result
+def template_concat(path1, path2=None, io_var=False):
+    if io_var:
+        sablon_o = pd.read_excel(path1)
+        sablon_io = pd.read_excel(path2)
+        template = pd.concat([sablon_o, sablon_io])
+        template.reset_index(inplace=True, drop=True)
+        enrolled_count = len(template.index)
+        result = {'template_df': template, 'enrolled_count': enrolled_count}
+        return result
+    else:
+        template = pd.read_excel(path1)
+        enrolled_count = len(template.index)
+        result = {'template_df': template, 'enrolled_count': enrolled_count}
+        return result
+
 # some students code their ids wrong this causes duplicate student ids
 # first hande them and find the right ones from template
 # then create unknown ids dataframe
@@ -142,7 +149,7 @@ def id_correct(df, template):
     return df, erasmuslike, corrected_ids
 '''
 
-def finalizer(df, template):
+def finalizer(df, template, butunleme = False):
     attended = template[template['OgrenciNo_StudentNo'].isin(df['TCKimlikNo'])]
     absent = template[~template['OgrenciNo_StudentNo'].isin(df['TCKimlikNo'])]
     attended.reset_index(inplace=True, drop=True)
@@ -153,8 +160,9 @@ def finalizer(df, template):
                 attended.loc[i, (attended.columns[-1])] = df.loc[i, ('Puan')]
             else:
                 attended.loc[i, (attended.columns[-1])] = 100
-            
-    absent[attended.columns[-1]] = -1
+
+    if butunleme == False:
+        absent[attended.columns[-1]] = -1
 
     frames = [attended, absent]
     concated = pd.concat(frames)
