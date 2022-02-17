@@ -45,6 +45,7 @@ def stats(df):
 # so corrected it to all numeric with regex
 
 def convert_datatypes(df):
+    df.loc[df['TCKimlikNo'].isnull(), ['TCKimlikNo']] = "11111111111"
     non_numeric = df.loc[~df['TCKimlikNo'].str.isnumeric()]
     for i in non_numeric.index:
         numeric = re.sub("[^0-9]", "", non_numeric.loc[i, ['TCKimlikNo']][0])
