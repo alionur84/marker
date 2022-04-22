@@ -117,7 +117,9 @@ def id_correct(df, template):
 
     for i in erasmuslike.index:
         df.drop(i, inplace=True)
-            
+    # sometimes optical reader machine reads a paper twice.
+    # in order to drop that duplicates below line is added
+    df = df.drop_duplicates(subset = 'TCKimlikNo')
     df.sort_values(by='TCKimlikNo', inplace=True)
     df.reset_index(inplace=True, drop=True)
     return df, erasmuslike, corrected_ids
