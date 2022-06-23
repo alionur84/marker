@@ -152,7 +152,7 @@ def id_correct(df, template):
     return df, erasmuslike, corrected_ids
 '''
 
-def finalizer(df, template, butunleme = False):
+def finalizer(df, template, butunleme=False, grad=False):
     attended = template[template['OgrenciNo_StudentNo'].isin(df['TCKimlikNo'])]
     absent = template[~template['OgrenciNo_StudentNo'].isin(df['TCKimlikNo'])]
     attended.reset_index(inplace=True, drop=True)
@@ -173,6 +173,10 @@ def finalizer(df, template, butunleme = False):
     concated = concated.sort_values(by=['OgrenciNo_StudentNo'])
     concated = concated.convert_dtypes()
     concated.reset_index(inplace=True, drop=True)
+    if grad:
+        returned_list = [concated]
+        return returned_list
+
     orgun = concated.loc[concated["OgrenciNo_StudentNo"] < 15000000000]
     io = concated.loc[concated["OgrenciNo_StudentNo"] >= 15000000000]
     

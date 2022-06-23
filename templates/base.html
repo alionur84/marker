@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link href=" {{ url_for('static', filename='css/style.css')}} " rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="../static/images/icons/site.webmanifest">
+
+    
     {% if title %}
     <title>Marker - {{ title }}</title>
     {% else %}
     <title>Marker</title>
     {% endif %}
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
 
   	<div class="container">
       <br>
@@ -30,9 +38,21 @@
 		  {% endblock %}
       
     </div>
+    <span class="loader"><span class="loader-inner"></span></span>
+    <!--<footer class="bg-light text-center text-lg-start">-->
+      <footer class="mt-auto">
+      
+      <div class="text-center p-3" style="background-color: rgb(237, 229, 226);">
+    <!--© 2022 Copyright:-->Developed by 
+      <a class="text-dark" href="mailto:ali.tepeciklioglu@gmail.com">Ali Onur Tepeciklioğlu  </a> <br>
+      <a href="https://github.com/alionur84" target="_blank" class="fa fa-github text-dark"></a>
+      <a href="https://scholar.google.com/citations?user=c5qBOkoAAAAJ&hl=en&oi=ao" target="_blank" class="fa fa-google text-dark"></a>
+      <a href="https://twitter.com/alionurtepe" target="_blank" class="fa fa-twitter text-dark"></a>
+      </div>
+  
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
     <script src="../static/js/script.js"></script>
-    
 
   </body>
 </html>
