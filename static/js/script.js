@@ -41,4 +41,4 @@ function IoOFF(){
 		orgun_from_label.innerHTML = "Örgün Şablon"
 	};
 
-	};
+};

@@ -41,9 +41,31 @@ def stats(df):
     'mean_mark': mean_mark, 'std_dev': std_dev}
     return result
 
+
 # not all student ids were numeric if student leaves some characters blank
 # so corrected it to all numeric with regex
 
+def convert_datatypes(df):
+    # if there are nonnumeric ids
+    if len(df.loc[df['TCKimlikNo'].isnull(), ['TCKimlikNo']]) != 0:
+        print("lengthdeyim")
+        df.loc[df['TCKimlikNo'].isnull(), ['TCKimlikNo']] = "11111111111"
+        non_numeric = df.loc[~df['TCKimlikNo'].str.isnumeric()]
+        for i in non_numeric.index:
+            numeric = re.sub("[^0-9]", "", non_numeric.loc[i, ['TCKimlikNo']][0])
+            df.loc[i, ['TCKimlikNo']] = numeric
+    df = df.convert_dtypes()
+    df['TCKimlikNo'] = df['TCKimlikNo'].astype('Int64')
+    df['Adı '] = df['Adı '].astype('str')
+    df['Soyadı'] = df['Soyadı'].astype('str')
+    df['Puan'] = df['Puan'].astype('Int64')
+    return df
+
+
+
+
+
+'''
 def convert_datatypes(df):
     df.loc[df['TCKimlikNo'].isnull(), ['TCKimlikNo']] = "11111111111"
     non_numeric = df.loc[~df['TCKimlikNo'].str.isnumeric()]
@@ -56,6 +78,7 @@ def convert_datatypes(df):
     df['Soyadı'] = df['Soyadı'].astype('str')
     df['Puan'] = df['Puan'].astype('Int64')
     return df
+'''
 
 # check if they are excel or csv files
 def template_concat(path1, path2=None, io_var=False):
